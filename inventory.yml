@@ -1,0 +1,6 @@
+all:
+  hosts:
+    master:
+      ansible_host: 10.13.1.101
+    slave:
+      ansible_host: 10.13.1.102
