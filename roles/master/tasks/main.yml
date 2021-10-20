@@ -42,8 +42,6 @@
   register: temp_password
   when: existed_replication_user.stdout == ""
 
-
-
 # - name: Set root user password
 #   mysql_user: 
 #     name: root
@@ -56,8 +54,6 @@
 - name: Change mysql password
   command: mysql --connect-expired-password -uroot -p'{{ temp_password.stdout }}' -e 'ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY "{{ mysql_password }}"'
   when: existed_replication_user.stdout == ""
-
-
 
 
 - name: Create a bet DB
@@ -85,5 +81,3 @@
     priv: '*.*:ALL'
     state: present
 
-# - name: Dump database master
-#   command: mysqldump  -u root -p'{{ mysql_password }}' --all-databases > /vagrant/dump/master.db

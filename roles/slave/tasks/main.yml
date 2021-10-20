@@ -50,32 +50,6 @@
     mysql --connect-expired-password -uroot -p'{{ temp_password.stdout }}' -e 'ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY "{{ mysql_password }}"'
   when: existed_replication_user.stdout == ""
 
-# - name: Create a bet DB
-#   mysql_db:
-#     login_user: root
-#     login_password: "{{ mysql_password }}"
-#     name: bet
-#     state: present
-
-# - name: Import bet database
-#   mysql_db:
-#     login_user: root
-#     login_password: "{{ mysql_password }}"
-#     name: bet
-#     state: import
-#     target: /vagrant/dump/master.sql
-
-
-# - name: Create database user with all database privileges
-#   mysql_user:
-#     login_user: root
-#     login_password: "{{ mysql_password }}"
-#     name: "{{ replication_user }}"
-#     password: "{{ replication_password }}"
-#     host: '%'
-#     priv: '*.*:ALL'
-#     state: present
-
 
 - name: Check slave replication status.
   command: >
