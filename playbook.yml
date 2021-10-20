@@ -1,38 +1,12 @@
 ---
-- name: Add records to /etc/hosts
-  hosts: all
-  become: True
-  gather_facts: False
+- hosts: master
+  name: Setup master
+  become: yes
   roles:
-    - role: add-entry-to-hosts
-      ip: 10.13.1.101
-      dns: master
-    - role: add-entry-to-hosts
-      ip: 10.13.1.102
-      dns: slave
+    - role: master
 
-- name: setup master
-  hosts: master
-  become: True
-  gather_facts: False
-  vars_files:
-    - global_vars.yml
+- hosts: slave
+  name: Setup slave
+  become: yes
   roles:
-    - role: percona-server
-      server_id: 1
-    - role: restore-dump
-      database_name: bet
-      backup_path: /vagrant/data/bet.dmp
-    - role: prepare-master
-
-- name: setup slave
-  hosts: slave
-  become: True
-  gather_facts: False
-  vars_files:
-    - global_vars.yml
-  roles:
-    - role: percona-server
-      server_id: 2
-      is_slave: True
-    - role: prepare-slave
+    - role: slave

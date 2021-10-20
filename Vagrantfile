@@ -3,13 +3,13 @@
 
 MACHINES = {
   :master => {
-        :box_name => "generic/centos8",
-        :ip_addr => '10.13.1.101',
+        :box_name => "centos/7",
+        :ip_addr => '10.99.1.101',
         :memory => 256
   },
   :slave => {
-        :box_name => "generic/centos8",
-        :ip_addr => '10.13.1.102',
+        :box_name => "centos/7",
+        :ip_addr => '10.99.1.102',
         :memory => 256
   }
   }
@@ -32,11 +32,13 @@ Vagrant.configure("2") do |config|
 
 
           SHELL
-		  # box.vm.provision :ansible do |ansible|
-		  #   ansible.playbook = "./ansible/playbook.yml"
-			# ansible.inventory_path = "./ansible/inventory.yml"
-			# ansible.verbose = true
-		  # end
+          config.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=777,fmode=777"]
+          
+		  box.vm.provision :ansible do |ansible|
+		    ansible.playbook = "./playbook.yml"
+			ansible.inventory_path = "./inventory.yml"
+			ansible.verbose = true
+		  end
 
       end
   end
